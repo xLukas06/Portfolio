@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>takenbysoul | Games Showcase</title>
+
+  <style>
+    :root {
+      --bg: #050505;
+      --bg-2: #090909;
+      --card: rgba(18, 18, 18, 0.86);
+      --card-strong: rgba(26, 26, 26, 0.94);
+      --text: #f5f5f5;
+      --muted: #b3b3b3;
+      --muted-2: #7f7f7f;
+      --line: rgba(255, 255, 255, 0.12);
+      --line-strong: rgba(255, 255, 255, 0.22);
+      --white-soft: rgba(255, 255, 255, 0.88);
+      --radius: 24px;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.65);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.07), transparent 34%),
+        radial-gradient(circle at 80% 38%, rgba(255, 255, 255, 0.035), transparent 30%),
+        linear-gradient(180deg, #0b0b0b 0%, var(--bg) 48%, #030303 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+      background-size: 52px 52px;
+      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.95), transparent 88%);
+      z-index: -2;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      width: 720px;
+      height: 720px;
+      left: 50%;
+      bottom: -520px;
+      transform: translateX(-50%);
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.06), transparent 68%);
+      filter: blur(16px);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(1180px, calc(100% - 44px));
+      margin: 0 auto;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #ffffff, #9b9b9b);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(8, 8, 8, 0.82);
+      backdrop-filter: blur(18px);
+    }
+
+    .nav-inner {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .logo {
+      font-size: 1.35rem;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+
+    .nav-links a {
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .nav-cta,
+    .btn {
+      border: 0;
+      cursor: pointer;
+      color: #050505;
+      font-weight: 900;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #f5f5f5, #a8a8a8);
+      box-shadow: 0 16px 36px rgba(255, 255, 255, 0.10);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+    }
+
+    .nav-cta {
+      padding: 12px 28px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 0 28px;
+      font-size: 0.94rem;
+    }
+
+    .btn.secondary {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: none;
+    }
+
+    .nav-cta:hover,
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 22px 52px rgba(255, 255, 255, 0.13);
+    }
+
+    .btn.secondary:hover {
+      border-color: rgba(255, 255, 255, 0.32);
+      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.36);
+    }
+
+    .hero {
+      min-height: calc(100vh - 72px);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 96px 0 80px;
+    }
+
+    .pill {
+      width: fit-content;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 34px;
+      padding: 10px 18px;
+      color: var(--muted);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.035);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .pulse {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #ffffff;
+      box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.45);
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.45); }
+      70% { box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+    }
+
+    h1 {
+      max-width: 940px;
+      margin: 0 auto;
+      font-size: clamp(3.4rem, 7vw, 7.4rem);
+      line-height: 0.95;
+      letter-spacing: -0.075em;
+      font-weight: 950;
+    }
+
+    .hero p {
+      max-width: 720px;
+      margin: 30px auto 0;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 1.5vw, 1.32rem);
+      line-height: 1.7;
+      letter-spacing: 0.01em;
+    }
+
+    .hero-actions {
+      margin-top: 42px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .hero-stats {
+      width: min(670px, 100%);
+      margin: 70px auto 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .stat-box {
+      padding: 22px 18px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid rgba(255, 255, 255, 0.11);
+    }
+
+    .stat-box strong {
+      display: block;
+      font-size: 2rem;
+      line-height: 1;
+      letter-spacing: -0.05em;
+      background: linear-gradient(90deg, #ffffff, #9b9b9b);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .stat-box span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted-2);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    section {
+      padding: 112px 0;
+    }
+
+    .section-head {
+      text-align: center;
+      margin-bottom: 54px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1;
+      letter-spacing: -0.065em;
+      font-weight: 950;
+    }
+
+    .section-head p {
+      margin: 18px auto 0;
+      max-width: 650px;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+
+    .showcase-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 22px;
+    }
+
+    .game-card {
+      grid-column: span 6;
+      overflow: hidden;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255, 255, 255, 0.11);
+      background: var(--card);
+      box-shadow: var(--shadow);
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .game-card.featured {
+      grid-column: span 12;
+    }
+
+    .game-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(255, 255, 255, 0.32);
+      box-shadow: 0 30px 100px rgba(0, 0, 0, 0.75), 0 0 48px rgba(255, 255, 255, 0.06);
+    }
+
+    .game-image {
+      position: relative;
+      min-height: 260px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 18% 32%, rgba(255, 255, 255, 0.10), transparent 26%),
+        radial-gradient(circle at 82% 16%, rgba(255, 255, 255, 0.06), transparent 30%),
+        linear-gradient(135deg, #161616, #050505 72%);
+    }
+
+    .game-card.featured .game-image {
+      min-height: 390px;
+    }
+
+    .game-image img {
+      width: 100%;
+      height: 100%;
+      min-height: inherit;
+      object-fit: cover;
+      opacity: 0.78;
+      filter: grayscale(1) contrast(1.08) brightness(0.86);
+      transform: scale(1.02);
+      transition: transform 0.35s ease, opacity 0.35s ease, filter 0.35s ease;
+    }
+
+    .game-card:hover .game-image img {
+      transform: scale(1.06);
+      opacity: 0.92;
+      filter: grayscale(1) contrast(1.14) brightness(0.95);
+    }
+
+    .game-image::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(5, 5, 5, 0.05), rgba(5, 5, 5, 0.82)),
+        linear-gradient(90deg, rgba(5, 5, 5, 0.64), rgba(5, 5, 5, 0.08) 70%);
+      pointer-events: none;
+    }
+
+    .game-content {
+      padding: 34px;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(255, 255, 255, 0.05), transparent 36%),
+        rgba(10, 10, 10, 0.78);
+    }
+
+    .game-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .tag,
+    .tag.blue,
+    .tag.red,
+    .tag.green {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 0 12px;
+      color: #f0f0f0;
+      background: rgba(255, 255, 255, 0.065);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 900;
+    }
+
+    .game-content h3 {
+      max-width: 760px;
+      font-size: clamp(1.65rem, 3.2vw, 3.25rem);
+      line-height: 1;
+      letter-spacing: -0.065em;
+      font-weight: 950;
+    }
+
+    .game-card:not(.featured) .game-content h3 {
+      font-size: clamp(1.45rem, 2.2vw, 2.15rem);
+    }
+
+    .game-content p {
+      max-width: 760px;
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    .game-info {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 26px;
+      max-width: 760px;
+    }
+
+    .info-chip {
+      padding: 14px 14px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.045);
+      border: 1px solid rgba(255, 255, 255, 0.10);
+    }
+
+    .info-chip strong {
+      display: block;
+      font-size: 1rem;
+    }
+
+    .info-chip span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted-2);
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .skill-card,
+    .contact-card {
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid rgba(255, 255, 255, 0.11);
+      box-shadow: var(--shadow);
+    }
+
+    .skill-card {
+      padding: 28px;
+      transition: transform 0.24s ease, border-color 0.24s ease;
+    }
+
+    .skill-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255, 255, 255, 0.30);
+    }
+
+    .icon,
+    .skill-card:nth-child(even) .icon {
+      width: 52px;
+      height: 52px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 26px;
+      border-radius: 16px;
+      color: #f0f0f0;
+      background: rgba(255, 255, 255, 0.065);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      font-size: 1.35rem;
+    }
+
+    .skill-card h3 {
+      font-size: 1.15rem;
+      letter-spacing: -0.035em;
+      margin-bottom: 10px;
+    }
+
+    .skill-card p {
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
+
+    .timeline {
+      width: min(900px, 100%);
+      margin: 0 auto;
+      display: grid;
+      gap: 18px;
+    }
+
+    .timeline-item {
+      position: relative;
+      padding: 28px;
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid rgba(255, 255, 255, 0.11);
+    }
+
+    .timeline-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 14px;
+    }
+
+    .timeline-top h3 {
+      font-size: 1.2rem;
+      letter-spacing: -0.035em;
+    }
+
+    .timeline-top span {
+      color: var(--muted-2);
+      font-weight: 800;
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+
+    .role {
+      margin-bottom: 14px;
+      color: #ffffff;
+      font-weight: 900;
+    }
+
+    .timeline-item p {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .contact {
+      padding-bottom: 86px;
+    }
+
+    .contact-card {
+      width: min(760px, 100%);
+      margin: 0 auto;
+      padding: 46px;
+      text-align: center;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.06), transparent 40%),
+        rgba(255, 255, 255, 0.035);
+    }
+
+    .contact-icon {
+      width: 86px;
+      height: 86px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 24px;
+      border-radius: 24px;
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.065);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow: 0 0 60px rgba(255, 255, 255, 0.06);
+      font-size: 2rem;
+    }
+
+    .contact-card h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: -0.065em;
+      line-height: 1;
+    }
+
+    .contact-card p {
+      margin: 16px auto 0;
+      max-width: 520px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .contact-actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 32px;
+    }
+
+    footer {
+      padding: 42px 0 52px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      text-align: center;
+      color: var(--muted-2);
+    }
+
+    footer .logo {
+      margin-bottom: 18px;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .reveal.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 900px) {
+      .nav-links {
+        gap: 18px;
+      }
+
+      .hero-stats,
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .game-card,
+      .game-card.featured {
+        grid-column: span 12;
+      }
+
+      .game-info {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        width: min(100% - 28px, 1180px);
+      }
+
+      .nav-inner {
+        height: auto;
+        min-height: 70px;
+      }
+
+      .nav-links a:not(.nav-cta) {
+        display: none;
+      }
+
+      .nav-cta {
+        padding: 10px 18px;
+      }
+
+      .hero {
+        padding-top: 72px;
+      }
+
+      .game-content,
+      .contact-card {
+        padding: 26px;
+      }
+
+      section {
+        padding: 82px 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="#top" class="logo gradient-text">takenbysoul</a>
+
+      <div class="nav-links">
+        <a href="#games">Games</a>
+        <a href="#skills">Skills</a>
+        <a href="#experience">Experience</a>
+        <a href="#contact" class="nav-cta">Hire Me</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+    <header class="hero">
+      <div class="container">
+        <div class="pill reveal"><span class="pulse"></span> Roblox Scripter & Game Developer</div>
+        <h1 class="reveal">Games I’ve <span class="gradient-text">Worked On</span></h1>
+        <p class="reveal">
+          A sleek showcase of Roblox games I have scripted, managed, maintained, or built myself.
+        </p>
+
+        <div class="hero-actions reveal">
+          <a class="btn" href="#games">View Games →</a>
+          <a class="btn secondary" href="#contact">Get in Touch</a>
+        </div>
+
+        <div class="hero-stats reveal">
+          <div class="stat-box">
+            <strong>5</strong>
+            <span>Games Shown</span>
+          </div>
+          <div class="stat-box">
+            <strong>Solo</strong>
+            <span>Main Scripter Role</span>
+          </div>
+          <div class="stat-box">
+            <strong>Lua</strong>
+            <span>Roblox Development</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section id="games">
+      <div class="container">
+        <div class="section-head reveal">
+          <h2>Featured <span class="gradient-text">Games</span></h2>
+        </div>
+
+        <div class="showcase-grid">
+          <article class="game-card featured reveal">
+            <div class="game-image">
+              <img src="https://i.imgur.com/dlQu8kl.png" alt="Angled game screenshot" onerror="this.style.display='none'" />
+            </div>
+            <div class="game-content">
+              <div class="game-meta">
+                <span class="tag green">Current Project</span>
+                <span class="tag blue">Only Scripter</span>
+                <span class="tag">Systems</span>
+              </div>
+              <h3>Angled</h3>
+              <p>
+                I am currently the only scripter for Angled, handling the scripting side of the game and building the core systems needed for gameplay, updates, and future expansion.
+              </p>
+              <div class="game-info">
+                <div class="info-chip">
+                  <strong>Only Scripter</strong>
+                  <span>Role</span>
+                </div>
+                <div class="info-chip">
+                  <strong>Active</strong>
+                  <span>Status</span>
+                </div>
+                <div class="info-chip">
+                  <strong>Lua</strong>
+                  <span>Roblox Systems</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="game-card reveal">
+            <div class="game-image">
+              <img src="https://i.imgur.com/OTDkKXw.png" alt="Beaks game screenshot" onerror="this.style.display='none'" />
+            </div>
+            <div class="game-content">
+              <div class="game-meta">
+                <span class="tag green">Managing Game</span>
+                <span class="tag blue">Only Developer</span>
+              </div>
+              <h3>Beaks</h3>
+              <p>
+                After the owner Neil left the project, I became the only developer still working on Beaks. I now manage the entire game, handle updates, script new features, maintain existing systems, and keep development moving forward.
+              </p>
+              <div class="game-info">
+                <div class="info-chip">
+                  <strong>Only Developer</strong>
+                  <span>Role</span>
+                </div>
+                <div class="info-chip">
+                  <strong>Active</strong>
+                  <span>Status</span>
+                </div>
+                <div class="info-chip">
+                  <strong>Updates</strong>
+                  <span>Management</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="game-card reveal">
+            <div class="game-image">
+              <img src="https://i.imgur.com/i87aZ8N.png" alt="Build Your Obby game screenshot" onerror="this.style.display='none'" />
+            </div>
+            <div class="game-content">
+              <div class="game-meta">
+                <span class="tag blue">Only Scripter</span>
+                <span class="tag red">Abandoned</span>
+              </div>
+              <h3>Build Your Obby</h3>
+              <p>
+                I was the only scripter for Build Your Obby and handled the game’s scripting work. The project was later abandoned after it did not perform well enough to keep developing.
+              </p>
+              <div class="game-info">
+                <div class="info-chip">
+                  <strong>Only Scripter</strong>
+                  <span>Role</span>
+                </div>
+                <div class="info-chip">
+                  <strong>Abandoned</strong>
+                  <span>Status</span>
+                </div>
+                <div class="info-chip">
+                  <strong>Obby</strong>
+                  <span>Genre</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="game-card reveal">
+            <div class="game-image">
+              <img src="https://i.imgur.com/o9ZBd9Y.png" alt="Ride Camels for Brainrots game screenshot" onerror="this.style.display='none'" />
+            </div>
+            <div class="game-content">
+              <div class="game-meta">
+                <span class="tag blue">Only Scripter</span>
+                <span class="tag red">Abandoned</span>
+              </div>
+              <h3>Ride Camels for Brainrots</h3>
+              <p>
+                I was the only scripter for this project as well. After the game did not do well, development was stopped and the project was abandoned.
+              </p>
+              <div class="game-info">
+                <div class="info-chip">
+                  <strong>Only Scripter</strong>
+                  <span>Role</span>
+                </div>
+                <div class="info-chip">
+                  <strong>Abandoned</strong>
+                  <span>Status</span>
+                </div>
+                <div class="info-chip">
+                  <strong>Gameplay</strong>
+                  <span>Systems</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="game-card reveal">
+            <div class="game-image">
+              <img src="https://i.imgur.com/4ILFNUZ.png" alt="King of the Cube game screenshot" onerror="this.style.display='none'" />
+            </div>
+            <div class="game-content">
+              <div class="game-meta">
+                <span class="tag">My Own Game</span>
+                <span class="tag blue">Only Scripter</span>
+                <span class="tag red">Abandoned</span>
+              </div>
+              <h3>King of the Cube</h3>
+              <p>
+                King of the Cube was my very own first game. I made it myself as the only scripter, but later abandoned it because I did not have enough funds to properly run ads and push the game.
+              </p>
+              <div class="game-info">
+                <div class="info-chip">
+                  <strong>First Game</strong>
+                  <span>Milestone</span>
+                </div>
+                <div class="info-chip">
+                  <strong>Only Scripter</strong>
+                  <span>Role</span>
+                </div>
+                <div class="info-chip">
+                  <strong>No Ad Funds</strong>
+                  <span>Reason Stopped</span>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="container">
+        <div class="section-head reveal">
+          <h2>What I <span class="gradient-text">Build</span></h2>
+          <p>Core areas I can bring to Roblox game development projects.</p>
+        </div>
+
+        <div class="skills-grid">
+          <div class="skill-card reveal">
+            <div class="icon">⌘</div>
+            <h3>Gameplay Systems</h3>
+            <p>Combat, abilities, quests, rounds, progression, data-driven modules, and clean server authority.</p>
+          </div>
+
+          <div class="skill-card reveal">
+            <div class="icon">▣</div>
+            <h3>Backend & Data</h3>
+            <p>ProfileStore, DataStore handling, player inventories, rewards, purchases, and reliable save structures.</p>
+          </div>
+
+          <div class="skill-card reveal">
+            <div class="icon">⚙</div>
+            <h3>Optimization</h3>
+            <p>Performance improvements, networking cleanup, anti-exploit thinking, and clean maintainable structure.</p>
+          </div>
+
+          <div class="skill-card reveal">
+            <div class="icon">$</div>
+            <h3>Monetization</h3>
+            <p>Gamepasses, developer products, subscriptions, shops, reward loops, and premium feature systems.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="container">
+        <div class="section-head reveal">
+          <h2>Development <span class="gradient-text">Experience</span></h2>
+          <p>A quick overview of the main responsibilities I’ve had across these projects.</p>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-item reveal">
+            <div class="timeline-top">
+              <h3>Angled</h3>
+              <span>Current</span>
+            </div>
+            <div class="role">Only Scripter</div>
+            <p>Responsible for scripting the game’s systems and keeping the technical side of development moving.</p>
+          </div>
+
+          <div class="timeline-item reveal">
+            <div class="timeline-top">
+              <h3>Beaks</h3>
+              <span>Current</span>
+            </div>
+            <div class="role">Only Developer / Game Manager</div>
+            <p>Managing the game after Neil left, including updates, scripting new content, maintaining systems, and handling overall development.</p>
+          </div>
+
+          <div class="timeline-item reveal">
+            <div class="timeline-top">
+              <h3>Personal & Past Projects</h3>
+              <span>Past</span>
+            </div>
+            <div class="role">Solo Scripter</div>
+            <p>Built or scripted Build Your Obby, Ride Camels for Brainrots, and King of the Cube before those projects were eventually abandoned.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <div class="container">
+        <div class="contact-card reveal">
+          <div class="contact-icon">☾</div>
+          <h2>Want to work <span class="gradient-text">together?</span></h2>
+          <p>Reach out with your project details, budget, and what systems you need. I’ll get back to you as soon as possible.</p>
+
+          <div class="contact-actions">
+            <a class="btn" href="https://discord.com/users/911585991083569172" target="_blank" rel="noreferrer">Message on Discord</a>
+            <button class="btn secondary" id="copyDiscord" type="button">Copy Username</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="logo gradient-text">takenbysoul</div>
+      <p>© 2026 takenbysoul. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    const revealElements = document.querySelectorAll(".reveal");
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.12
+    });
+
+    revealElements.forEach((element, index) => {
+      element.style.transitionDelay = `${Math.min(index * 35, 260)}ms`;
+      observer.observe(element);
+    });
+
+    const copyButton = document.getElementById("copyDiscord");
+    const discordUsername = "takenbysoul";
+
+    copyButton.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(discordUsername);
+        copyButton.textContent = "Copied!";
+      } catch (error) {
+        copyButton.textContent = discordUsername;
+      }
+
+      setTimeout(() => {
+        copyButton.textContent = "Copy Username";
+      }, 1600);
+    });
+  </script>
+</body>
+</html>
